@@ -13,7 +13,8 @@ export const Upload = styled.div`
 `;
 
 export const Text = styled.div`
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     color: #000111;
+    margin: 10px;
 `;

@@ -5,6 +5,10 @@ export const Container = styled.div`
     height: 100%;
     width: 100%;
     margin: auto;
+
+    @media (max-width: 500px) {
+        padding: 0 10px;
+    }
 `;
 
 export const Column = styled.div`

@@ -7,6 +7,12 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @media (max-width: 500px) {
+        width: 100%;
+        gap: 0;
+        padding: 10px 16px;
+    }
 `;
 
 export const Title = styled.h2`
@@ -15,6 +21,7 @@ export const Title = styled.h2`
     line-height: 22px;
     color: #000000;
     text-align: center;
+    margin: 10px 16px;
 `;
 
 export const Text = styled.p`
@@ -33,11 +40,14 @@ export const Author = styled.h5`
     text-align: center;
 `;
 
-export const Display = styled.div`
+interface DisplayProps {
+    aspectRatio: number;
+};
+
+export const Display = styled.div<DisplayProps>`
     position: relative;
-    /* width: 400px; */
     width: 100%;
-    height: 400px;
+    padding-bottom: ${({ aspectRatio = 0.5625 }) => `${aspectRatio * 100}%`};
     border-radius: 10px;
     border: none;
     margin: auto;
@@ -45,12 +55,33 @@ export const Display = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    @media (max-width: 500px) {
+        /* padding: 10px; */
+    }
 `;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+    .content {
+        width: 100%;
+        overflow: hidden;
+        justify-content: center;
+
+        @media (max-width: 500px) {
+            /* padding: 16px; */
+        }
+    }
+
+    .content img {
+        width: 100%;
+        margin: auto;
+        justify-self: center;
+        align-self: center;
+    }
+`;
 
 export const Image = styled(NextImage)`
     object-fit: contain;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     overflow: hidden;
 `;

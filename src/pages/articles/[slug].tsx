@@ -28,8 +28,6 @@ export async function getServerSideProps({ req, res, params }: GetServerSideProp
     const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`);
     const article = response?.data?.payload?.article;
 
-    console.log('article', article);
-
     if(!article) {
         return {
             redirect: {

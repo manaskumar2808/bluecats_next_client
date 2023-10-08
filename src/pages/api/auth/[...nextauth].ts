@@ -24,6 +24,10 @@ export const authOptions: AuthOptions = {
                     password: credentials?.password,
                 };
                 const response = await axios.post(`${config?.BASE_URL}/${config?.LOGIN}`, body);
+                if(response?.data?.error) {
+                    console.log('Login failed!', response?.data?.error);
+                    throw new Error(response?.data?.error || 'Login failed!');
+                }
                 return response?.data?.payload;
             }
         })

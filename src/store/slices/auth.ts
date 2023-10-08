@@ -17,6 +17,16 @@ export interface SignupPayload {
     lastName?: string;
     phone?: string;
     email?: string;
+    rand?: number;
+};
+
+export interface UserUpdatePayload {
+    id: string;
+    userName: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    email?: string;
 };
 
 export interface AuthState {
@@ -40,6 +50,11 @@ export const login = createAsyncThunk('auth/login', async (payload: LoginPayload
 
 export const signup = createAsyncThunk('auth/signup', async (payload: SignupPayload) => {
     const response = await axios.post(`${config?.BASE_URL}/${config?.SIGNUP}`, payload);
+    return response?.data;
+});
+
+export const updateUser = createAsyncThunk('user/update', async (payload: UserUpdatePayload) => {
+    const response = await axios.put(`${config?.BASE_URL}/${config?.USER}/${payload?.id}`, payload);
     return response?.data;
 });
 
@@ -85,6 +100,21 @@ export const authSlice = createSlice({
             state.loader = false;
             state.auth = false;
             state.error = action?.error?.message || 'Error occurred in signup!';
+            state.user = null;
+        })
+
+        builder.addCase(updateUser?.pending, (state) => {
+            state.loader = true;
+            state.error = null;
+        })
+        builder.addCase(updateUser.fulfilled, (state, action) => {
+            state.loader = false;
+            state.error = null;
+            state.user = action?.payload?.user;
+        })
+        builder.addCase(updateUser?.rejected, (state, action) => {
+            state.loader = false;
+            state.error = action?.error?.message || 'Error occured while updating user data!';
             state.user = null;
         })
     }

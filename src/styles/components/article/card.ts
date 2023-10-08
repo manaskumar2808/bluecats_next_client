@@ -9,6 +9,10 @@ export const Container = styled.div`
     border: 0.5px solid #ccc;
     justify-content: center;
     padding: 20px;
+
+    @media (max-width: 500px) {
+        width: 100%;
+    }
 `;
 
 export const Column = styled.div`

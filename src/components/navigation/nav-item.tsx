@@ -1,22 +1,35 @@
 import { NavItemEnum } from '@/constants';
-import { Container, NavBrand, NavLink, NavText } from '@/styles/components/navigation/nav-item';
+import { NavBarType } from '@/constants/navigation';
+import { Container, NavBrand, NavIcon, NavLink, NavText } from '@/styles/components/navigation/nav-item';
 import { NavItemType } from '@/types/navitem';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 type NavItemProps = {
     navItem?: NavItemType;
     type?: NavItemEnum;
+    navBarType?: NavBarType;
 }
 
-const NavItem = ({ navItem, type = NavItemEnum.TAB }: NavItemProps) => {
+const NavItem = ({ navItem, type = NavItemEnum.TAB, navBarType = NavBarType.TOP }: NavItemProps) => {
     if(!navItem)
         return;
 
-    const { title, path } = navItem;
+    const router = useRouter();
+
+    
+    const { title, path, Icon } = navItem;
+    
+    const active = router?.pathname === path;
+    const size = 27;
+    const color = active ? '#ffffff' : '#404040';
 
     return (
         <Container>
             <NavLink href={path}>
-                {type === NavItemEnum.TAB ? <NavText>{title}</NavText> : <NavBrand>{title}</NavBrand>}
+                {type === NavItemEnum.BRAND && navBarType === NavBarType.TOP && <Image src={'/images/logo/cat-64.png'} alt={'Logo'} height={30} width={30} />}
+                {type === NavItemEnum.TAB && navBarType === NavBarType.BOTTOM && Icon && <NavIcon active={active}><Icon style={{ height: size, width: size, color }} /></NavIcon>}
+                {type === NavItemEnum.TAB ? <NavText active={active}>{title}</NavText> : <NavBrand>{title}</NavBrand>}
             </NavLink>
         </Container>
     );

@@ -15,7 +15,13 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         margin: 0;
-        min-width: 450px;
+        min-width: 500px;
+        height: 100vh;
+
+        @media (max-width: 500px) {
+            min-width: 100%;
+            width: 100%;
+        }
     }
 `;
 
