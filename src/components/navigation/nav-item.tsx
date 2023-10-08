@@ -12,11 +12,10 @@ type NavItemProps = {
 }
 
 const NavItem = ({ navItem, type = NavItemEnum.TAB, navBarType = NavBarType.TOP }: NavItemProps) => {
+    const router = useRouter();
+    
     if(!navItem)
         return;
-
-    const router = useRouter();
-
     
     const { title, path, Icon } = navItem;
     

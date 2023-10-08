@@ -14,7 +14,7 @@ const NotFoundPage = () => {
         <Container>
             <Fallback>
                 <Title>Oops! Page not found!</Title>
-                <Description>Looks like that the page you are trying to access doesn't exist.</Description>
+                <Description>Looks like that the page you are trying to access doesn&apos;t exist.</Description>
                 <Button onClick={goToHome}>Go to home</Button>
             </Fallback>
         </Container>
