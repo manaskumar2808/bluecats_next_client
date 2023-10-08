@@ -6,7 +6,7 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     // BASE_URL: 'http://localhost:2000/api',
-    BASE_URL: 'https://bluecats.onrender.com/',
+    BASE_URL: 'https://bluecats.onrender.com/api',
     ARTICLE: 'article',
     LOGIN: 'auth/login',
     SIGNUP: 'auth/signup',
