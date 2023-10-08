@@ -21,7 +21,7 @@ const Article = ({ article }: ArticleProps) => {
         }).catch(err => {
             console.log('Error loading image', err?.message);
         });
-    }, []);
+    }, [image]);
 
     return (
         <Container>

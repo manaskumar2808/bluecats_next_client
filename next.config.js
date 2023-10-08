@@ -5,7 +5,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   publicRuntimeConfig: {
-    BASE_URL: 'http://localhost:2000/api',
+    // BASE_URL: 'http://localhost:2000/api',
+    BASE_URL: 'https://bluecats.onrender.com/',
     ARTICLE: 'article',
     LOGIN: 'auth/login',
     SIGNUP: 'auth/signup',
