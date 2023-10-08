@@ -23,8 +23,8 @@ const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content,
     const [page, setPage] = useState(0);
 
     const pages = [
-        <BasicInput title={title} image={image} setTitle={setTitle} setImage={setImage} file={file} setFile={setFile}  />,
-        <QuillInput content={content} setContent={setContent} />
+        <BasicInput key={'basic'} title={title} image={image} setTitle={setTitle} setImage={setImage} file={file} setFile={setFile}  />,
+        <QuillInput key={'quill'} content={content} setContent={setContent} />
     ];
 
     const length = pages?.length;

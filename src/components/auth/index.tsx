@@ -133,8 +133,8 @@ const Auth = ({ mode = AuthMode.LOGIN, user }: AuthProps) => {
             <Form style={{ width: '100%' }} onSubmit={onSubmit}>
                 <Column>
                     <Legend>{legend}</Legend>
-                        {fields.map((row: any[]) => (
-                            <Row>
+                        {fields.map((row: any[], index: number) => (
+                            <Row key={index}>
                                 {row?.map(field => (
                                     <Form.Group key={field?.id} style={{ width: '100%' }}>
                                         <Form.Label>{field?.label}</Form.Label>

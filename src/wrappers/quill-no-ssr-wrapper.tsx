@@ -16,4 +16,6 @@ const QuillNoSSRWrapper = dynamic(
     { ssr: false }
 );
 
+QuillNoSSRWrapper.displayName = 'QuillNoSSRWrapper';
+
 export default QuillNoSSRWrapper;
