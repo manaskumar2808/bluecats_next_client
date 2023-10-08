@@ -8,6 +8,12 @@ export const Container = styled.div`
     border: 0.5px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
+
+    @media (max-width: 500px) {
+        border: none;
+        padding: 10px;
+        height: 85%;
+    }
 `;
 
 export const Row = styled.div`
@@ -32,6 +38,11 @@ export const Display = styled.div`
     @media (max-width: 800px) {
         width: 100%;
     }
+
+    @media (max-width: 500px) {
+        max-height: 250px;
+        border-radius: 10px;
+    }
 `;
 
 export const Image = styled.img`
@@ -50,6 +61,10 @@ export const Info = styled.div`
 
     @media (max-width: 800px) {
         width: 100%;
+    }
+
+    @media (max-width: 500px) {
+        padding: 20px 0;
     }
 `;
 

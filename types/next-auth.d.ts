@@ -7,6 +7,7 @@ interface UserDoc {
     email?: string | undefined;
     name?: string | undefined;
     phone?: string | undefined;
+    rand?: number;
 };
 
 declare module 'next-auth' {

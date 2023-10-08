@@ -1,19 +1,42 @@
+import Image from "next/image";
 import styled from "styled-components";
 
 export const Container = styled.div`
-    position: relative;
-    height: 500px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 `;
 
 export const Box = styled.div`
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%); */
     justify-content: center;
     align-items: center;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
+export const Display = styled.div`
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: auto;
+    border: 0.5px solid #ccc;
+`;
+
+export const Photo = styled(Image)`
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 `;
 
 export const Username = styled.h2`

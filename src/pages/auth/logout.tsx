@@ -1,4 +1,4 @@
-import { Box, Container, Description, Row, Title } from '@/styles/pages/auth/logout';
+import { Box, ButtonWrapper, Container, Description, Row, Title } from '@/styles/pages/auth/logout';
 import { GetServerSidePropsContext } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
@@ -28,9 +28,14 @@ const LogoutPage = () => {
             <Box>
                 <Title>Signing Out</Title>
                 <Description>Are you sure, you want to logout?</Description>
+                <div style={{ flex: 1 }} />
                 <Row>
-                    <Button onClick={onLogout} variant='danger'>{loader ? <Spinner style={{ color: '#fff', height: 15, width: 15 }} /> : 'Yes logout'}</Button>
-                    <Button onClick={onCancel} variant='dark'>Go back</Button>
+                    <ButtonWrapper>
+                        <Button style={{ width: '100%' }} onClick={onLogout} variant='danger'>{loader ? <Spinner style={{ color: '#fff', height: 15, width: 15 }} /> : 'Yes logout'}</Button>
+                    </ButtonWrapper>
+                    <ButtonWrapper>
+                        <Button style={{ width: '100%' }} onClick={onCancel} variant='dark'>Go back</Button>
+                    </ButtonWrapper>
                 </Row>
             </Box>
         </Container>
@@ -43,7 +48,7 @@ export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext
         return {
             redirect: {
                 permanent: true,
-                destination: '/auth',
+                destination: '/auth/login',
             },
             props: {
                 isAuth: false,

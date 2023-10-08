@@ -5,4 +5,8 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 10px;
     height: 400px;
+
+    @media (max-width: 500px) {
+        height: 300px;
+    }
 `;

@@ -7,6 +7,10 @@ export const Container = styled.div`
     /* border: 1px solid #ccc; */
     padding: 0 10px;
     box-sizing: border-box;
+
+    @media (max-width: 500px) {
+        
+    }
 `;
 
 export const NavBar = styled.div`

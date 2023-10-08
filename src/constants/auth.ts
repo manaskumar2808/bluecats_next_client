@@ -1,6 +1,7 @@
 export enum AuthMode {
     LOGIN = 'Login',
     SIGNUP = 'Signup',
+    UPDATE = 'Update',
 };
 
 export enum AuthData {

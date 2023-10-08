@@ -6,6 +6,7 @@ const nextConfig = {
     ARTICLE: 'article',
     LOGIN: 'auth/login',
     SIGNUP: 'auth/signup',
+    USER: 'user',
   }
 }
 

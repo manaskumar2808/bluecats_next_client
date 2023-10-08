@@ -1,15 +1,15 @@
-import { Container, Grid } from '@/styles/components/listing/article';
-import { ArticleType } from '@/types/article';
+import { Container, Grid, Legend } from '@/styles/components/listing/article';
 import ArticleCard from '../article/card';
-import { useEffect, useState } from 'react';
 
 interface ArticleListingProps {
     list: any[];
+    legend?: string;
 };
 
-const ArticleListing = ({ list = [] }: ArticleListingProps) => {
+const ArticleListing = ({ list = [], legend }: ArticleListingProps) => {
     return (
         <Container>
+            {legend && <Legend>{legend}</Legend>}
             <Grid>
                 {list?.map((item) => (
                     <ArticleCard key={item?.id} article={item} />
