@@ -85,3 +85,15 @@ export const Image = styled(NextImage)`
     /* border-radius: 10px; */
     overflow: hidden;
 `;
+
+export const ShareContainer = styled.div`
+    justify-content: center;
+    margin: auto;
+`;
+
+export const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+`;

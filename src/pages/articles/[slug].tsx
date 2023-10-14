@@ -55,7 +55,7 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 dateModified={article?.updatedAt as string}
                 description={article?.content}
             />
-            <Article article={article} />
+            <Article article={article} url={currentUrl} />
         </Container>
     );
 }

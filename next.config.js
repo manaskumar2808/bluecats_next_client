@@ -11,10 +11,7 @@ const nextConfig = {
     LOGIN: 'auth/login',
     SIGNUP: 'auth/signup',
     USER: 'user',
-  },
-  images: {
-    domains: ['*'],
-  },
+  }
 }
 
 module.exports = nextConfig
