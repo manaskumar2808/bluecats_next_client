@@ -27,6 +27,7 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 title={article?.title}
                 openGraph={{
                     type: 'article',
+                    url: currentUrl,
                     article: {
                         publishedTime: article?.createdAt,
                         modifiedTime: article?.updatedAt,
