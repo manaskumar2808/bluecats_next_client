@@ -12,15 +12,17 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { RouteEnum } from '@/constants/route';
+import { NextSeo } from 'next-seo';
+import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-interface ProfileProps {
+interface ProfilePageProps {
     user: UserDoc;
     articles: ArticleType[];
 };
 
-const Profile = ({ user, articles }: ProfileProps) => {
+const ProfilePage = ({ user, articles }: ProfilePageProps) => {
     const router = useRouter();
 
     const goToUpdate = () => {
@@ -29,6 +31,9 @@ const Profile = ({ user, articles }: ProfileProps) => {
 
     return (
         <Container>
+            <NextSeo 
+                {...NEXT_SEO_DEFAULT}
+            />
             <Box>
                 <Display>
                     <Photo loader={(img: ImageLoaderProps) => img?.src} src={getProfileImage(user?.rand)} alt={user?.userName} fill />
@@ -74,4 +79,4 @@ export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext
     }
 }
 
-export default Profile;
+export default ProfilePage;

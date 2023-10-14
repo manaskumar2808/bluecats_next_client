@@ -6,6 +6,8 @@ export type ArticleType = {
     content: string;
     author: UserDoc;
     image?: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface PostArticle {

@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { UserDoc } from "../../types/next-auth";
 import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
+import { NEXT_SEO_DEFAULT } from "../../next-seo-config";
 
 interface PostPageProps {
     user: UserDoc;
@@ -25,6 +27,9 @@ const PostPage = ({ user }: PostPageProps) => {
 
     return (
         <Container>
+            <NextSeo 
+                {...NEXT_SEO_DEFAULT}
+            />
             <Editor user={user} onButtonClick={onPost} />
         </Container>
     );

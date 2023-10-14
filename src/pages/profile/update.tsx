@@ -7,16 +7,21 @@ import axios from 'axios';
 import Auth from '@/components/auth';
 import { AuthMode } from '@/constants/auth';
 import { AuthContainer, Container } from '@/styles/pages/profile/update';
+import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
+import { NextSeo } from 'next-seo';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-interface ProfileUpdateProps {
+interface ProfileUpdatePageProps {
     user: UserDoc;
 };
 
-const ProfileUpdate = ({ user }: ProfileUpdateProps) => {
+const ProfileUpdatePage = ({ user }: ProfileUpdatePageProps) => {
     return (
         <Container>
+            <NextSeo 
+                {...NEXT_SEO_DEFAULT}
+            />
             <AuthContainer>
                 <Auth mode={AuthMode.UPDATE} user={user} />
             </AuthContainer>
@@ -50,4 +55,4 @@ export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext
     }
 }
 
-export default ProfileUpdate;
+export default ProfileUpdatePage;

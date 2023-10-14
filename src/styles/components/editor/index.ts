@@ -9,6 +9,10 @@ export const Container = styled.div`
     border-radius: 5px;
     overflow: hidden;
 
+    @media (max-width: 800px) {
+        height: 85%;
+    }
+
     @media (max-width: 500px) {
         border: none;
         padding: 10px;
@@ -36,6 +40,7 @@ export const Display = styled.div`
     overflow: hidden;
 
     @media (max-width: 800px) {
+        max-height: 300px;
         width: 100%;
     }
 
@@ -69,7 +74,7 @@ export const Info = styled.div`
 `;
 
 export const QuillContainer = styled.div`
-    height: 200px;
+    /* height: 200px; */
 `;
 
 export const LoaderContainer = styled.div`
