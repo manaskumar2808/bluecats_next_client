@@ -11,6 +11,8 @@ import axios from "axios";
 import getConfig from 'next/config';
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
+import { NextSeo } from "next-seo";
+import { NEXT_SEO_DEFAULT } from "../../next-seo-config";
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -40,6 +42,9 @@ const HomePage = ({ articles: articleList }: HomePageProps) => {
 
     return (
         <Container>
+            <NextSeo 
+                {...NEXT_SEO_DEFAULT}
+            />
             <ArticleListing list={articleList} />
         </Container>
     );
