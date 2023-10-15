@@ -20,11 +20,12 @@ const { publicRuntimeConfig: config } = getConfig();
 
 interface ProfilePageProps {
     user: UserDoc;
+    self: boolean;
     articles: ArticleType[];
     drafts: ArticleType[];
 };
 
-const ProfilePage = ({ user, articles, drafts }: ProfilePageProps) => {
+const ProfilePage = ({ user, self, articles, drafts }: ProfilePageProps) => {
     const router = useRouter();
 
     const goToUpdate = () => {
@@ -43,47 +44,72 @@ const ProfilePage = ({ user, articles, drafts }: ProfilePageProps) => {
                 {user?.userName && <Username>{user?.userName}</Username>}
                 {user?.name && <Name>{user?.name}</Name>}
                 {user?.email && <Email>{user?.email}</Email>}
-                <Button onClick={goToUpdate} variant='dark'>Update</Button>
-                {/* {user?.phone && <Phone>{user?.phone}</Phone>} */}
+                {self && <Button onClick={goToUpdate} variant='dark'>Update</Button>}
             </Box>
-            {drafts?.length > 0 && <ArticleListing list={drafts} legend='Your drafts' />}
-            {articles?.length > 0 && <ArticleListing list={articles} legend='Your posts' />}
+            {self && drafts?.length > 0 && <ArticleListing list={drafts} legend={self ? 'Your drafts' : `${user?.userName}'s drafts`} />}
+            {articles?.length > 0 && <ArticleListing list={articles} legend={self ? 'Your posts' : `${user?.userName}'s posts`} />}
         </Container>
     );
 }
 
-export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
-    const session = await getServerSession(req, res, authOptions);
-
-    if(!session?.jwt || !session?.user) {
+export const getServerSideProps = async ({ req, res, query }: GetServerSidePropsContext) => {
+    try {
+        const session = await getServerSession(req, res, authOptions);
+        
+        if(!session?.jwt || !session?.user) {
+            return {
+                redirect: {
+                    permanent: true,
+                    destination: '/auth?mode=Login',
+                },
+                props: {
+                    isAuth: false,
+                }
+            }
+        }
+        
+        const token = session?.jwt?.token as string;
+        const userName = query?.username;
+        
+        let response, user;
+        
+        if(userName) {
+            response = await axios.get(`${config?.BASE_URL}/${config?.USER}?username=${userName}`);
+            user = response?.data?.payload?.user;
+        
+            if(!user)
+                throw new Error('User not found!');
+        } else {
+            response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`, headerConfig(token));
+            user = response?.data?.payload?.user;
+        }
+        
+        const self = session?.user?.id === user?.id;
+        
+        response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}?user=${user?.id}`, headerConfig(token));
+        const articles = response?.data?.payload?.articles || [];
+        let drafts = [];
+        
+        if(self) {
+            response = await axios.get(`${config?.BASE_URL}/${config?.DRAFT}`, headerConfig(token));
+            drafts = response?.data?.payload?.drafts || [];
+        }
+        
+        return {
+            props: {
+                isAuth: true,
+                user,
+                articles,
+                drafts,
+                self,
+            }
+        }
+    } catch(err) {
         return {
             redirect: {
                 permanent: true,
-                destination: '/auth?mode=Login',
-            },
-            props: {
-                isAuth: false,
+                destination: '/404',
             }
-        }
-    }
-
-    const token = session?.jwt?.token as string;
-
-    let response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`, headerConfig(token));
-    const user = response?.data?.payload?.user;
-
-    response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}?user=${session?.user?.id}`, headerConfig(token));
-    const articles = response?.data?.payload?.articles || [];
-
-    response = await axios.get(`${config?.BASE_URL}/${config?.DRAFT}`, headerConfig(token));
-    const drafts = response?.data?.payload?.drafts || [];
-
-    return {
-        props: {
-            isAuth: true,
-            user,
-            articles,
-            drafts,
         }
     }
 }

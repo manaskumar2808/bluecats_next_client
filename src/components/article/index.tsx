@@ -5,6 +5,8 @@ import { ImageLoaderProps } from "next/image";
 import { useEffect, useState } from "react";
 import { FacebookShareButton, WhatsappShareButton, WhatsappIcon, PinterestShareButton, EmailShareButton, LinkedinShareButton, LinkedinIcon, PinterestIcon, FacebookIcon, InstapaperShareButton, InstagramIcon, EmailIcon } from 'next-share';
 import Photo from "../photo";
+import { useRouter } from "next/router";
+import { RouteEnum } from "@/constants/route";
 
 type ArticleProps = {
     article: ArticleType;
@@ -12,6 +14,8 @@ type ArticleProps = {
 }
 
 const Article = ({ article, url }: ArticleProps) => {
+    const router = useRouter();
+
     const { title, content, image, author } = article;
 
     const [aspectRatio, setAspectRatio] = useState<number>(0.0);
@@ -28,6 +32,10 @@ const Article = ({ article, url }: ArticleProps) => {
         });
     }, [image]);
 
+    const goToAuthorProfile = () => {
+        router?.push(`${RouteEnum.PROFILE}?username=${author?.userName}`);
+    }
+
     return (
         <Container>
             {image && aspectRatio > 0.0 && <Display aspectRatio={aspectRatio}>
@@ -35,7 +43,7 @@ const Article = ({ article, url }: ArticleProps) => {
                 <Photo src={image} alt={title} fill />
             </Display>}
            <Title>{title}</Title>
-           <Author>{author?.userName}</Author>
+           <Author onClick={goToAuthorProfile}>{author?.userName}</Author>
            <Content>
                 <div className="content" dangerouslySetInnerHTML={{__html: content}} />
            </Content>

@@ -62,13 +62,23 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
 }
 
 export async function getServerSideProps({ req, res, params }: GetServerSidePropsContext) {
-    const session = await getServerSession(req, res, authOptions);
-    const title = params?.['slug'] as string;
-    const encodedTitle = title && encodeURIComponent(title);
-    const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`, headerConfig(session?.jwt?.token as string));
-    const article = response?.data?.payload?.article;
-
-    if(!article) {
+    try {
+        const session = await getServerSession(req, res, authOptions);
+        const title = params?.['slug'] as string;
+        const encodedTitle = title && encodeURIComponent(title);
+        const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`, headerConfig(session?.jwt?.token as string));
+        const article = response?.data?.payload?.article;
+    
+        if(!article) 
+            throw new Error('Article not found!');
+    
+        return {
+            props: {
+                article,
+                isAuth: (session && session?.jwt && session?.user),
+            },
+        };
+    } catch(err) {
         return {
             redirect: {
                 permanent: true,
@@ -76,13 +86,6 @@ export async function getServerSideProps({ req, res, params }: GetServerSideProp
             },
         }
     }
-
-    return {
-        props: {
-            article,
-            isAuth: (session && session?.jwt && session?.user),
-        },
-    };
 }
 
 export default ArticleDetailsPage;

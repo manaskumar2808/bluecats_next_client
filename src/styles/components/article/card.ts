@@ -45,7 +45,13 @@ export const Title = styled.h3`
 `;
 
 export const Author = styled.p`
+    cursor: pointer;
     font-size: 13px;
     font-weight: 400;
     color: #1894ff;
+    z-index: 50;
+
+    &:hover {
+        color: #0248ab;
+    }
 `;
