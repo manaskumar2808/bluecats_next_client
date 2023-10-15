@@ -17,13 +17,14 @@ interface EditorPagesProps {
     deleting?: boolean;
     loader: boolean | undefined;
     error: string | undefined | null;
-    valid: boolean | undefined;
+    valid?: boolean;
+    validDraft?: boolean;
     onSubmit?: MouseEventHandler<HTMLButtonElement>;
     onSave?: MouseEventHandler<HTMLButtonElement>;
     onDelete?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content, setContent, error, loader, saving, deleting, valid, onSubmit, onSave, onDelete }: EditorPagesProps) => {
+const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content, setContent, error, loader, saving, deleting, valid, validDraft, onSubmit, onSave, onDelete }: EditorPagesProps) => {
     const [page, setPage] = useState(0);
 
     const pages = [
@@ -52,8 +53,8 @@ const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content,
     return (
         <Container>
             <SaveContainer>
-                <Button size='sm' variant='primary' disabled={saving} onClick={onSave}>{saving ? 'Saving...' : 'Save'}</Button>
-                <Button size='sm' variant='danger' disabled={deleting} onClick={onDelete}>{deleting ? 'Deleting...' : 'Delete'}</Button>
+                <Button style={{ width: 100 }} size='sm' variant='primary' disabled={saving || !validDraft} onClick={onSave}>{saving ? 'Saving...' : 'Save'}</Button>
+                <Button style={{ width: 100 }} size='sm' variant='danger' disabled={deleting || !validDraft} onClick={onDelete}>{deleting ? 'Deleting...' : 'Delete'}</Button>
             </SaveContainer>
             {pages[page]}
             <div style={{ flex: 1 }} />

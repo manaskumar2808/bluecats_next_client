@@ -9,6 +9,7 @@ import { AuthMode } from '@/constants/auth';
 import { AuthContainer, Container } from '@/styles/pages/profile/update';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 import { NextSeo } from 'next-seo';
+import headerConfig from '../api/header-config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -44,7 +45,7 @@ export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext
         }
     }
 
-    const response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`);
+    const response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`, headerConfig(session?.jwt?.token as string));
     const user = response?.data?.payload?.user;
     
     return {

@@ -33,11 +33,16 @@ export const Text = styled.p`
 `;
 
 export const Author = styled.h5`
+    cursor: pointer;
     font-size: 13px;
     font-weight: 500;
     line-height: 18px;
     color: #1894FF;
     text-align: center;
+
+    &:hover {
+        color: #0248ab;
+    }
 `;
 
 interface DisplayProps {

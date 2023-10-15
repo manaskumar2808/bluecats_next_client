@@ -31,6 +31,7 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
     const [file, setFile] = useState<any>(null);
 
     const valid = validPostArticle({ title, content, image, file });
+    const validDraft = validDraftArticle({ id, title, content, image, file });
 
     useEffect(() => {
         setDomLoaded(true);
@@ -128,6 +129,7 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
                         error={error}
                         loader={loader}
                         valid={valid}
+                        validDraft={validDraft}
                         setTitle={setTitle}
                         setContent={setContent}
                         setImage={setImage}

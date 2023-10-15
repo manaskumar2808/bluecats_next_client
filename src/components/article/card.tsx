@@ -1,8 +1,10 @@
 import { ArticleMode } from '@/constants/article';
+import { RouteEnum } from '@/constants/route';
 import { Container, Column, Author, Display, Photo, Title } from '@/styles/components/article/card';
 import { ArticleType } from '@/types/article';
 import { ImageLoaderProps } from 'next/image';
 import { useRouter } from 'next/navigation';
+import { MouseEventHandler } from 'react';
 
 interface ArticleCardProps {
     article: ArticleType;
@@ -19,6 +21,11 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
             router.push(`articles/${title}`);
     }
 
+    const goToAuthorProfile = (e: any) => {
+        e?.stopPropagation();
+        router?.push(`${RouteEnum.PROFILE}?username=${author?.userName}`);
+    }
+
     return (
         <Container onClick={onArticleClick}>
             <Column>
@@ -26,7 +33,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                     {image && <Photo loader={(img: ImageLoaderProps) => img.src} src={image} alt={title} layout='fill' />}
                 </Display>
                 <Title>{title}</Title>
-                <Author>{author?.userName}</Author>
+                <Author id='author' onClick={goToAuthorProfile}>{author?.userName}</Author>
             </Column>
         </Container>
     );
