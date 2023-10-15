@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from "next";
 import { store, wrapper } from '@/store';
 import { updateArticles } from "@/store/slices/article";
 import { useSelector } from "react-redux";
-import { getArticleErrorSelector, getArticleLoaderSelector, getArticleSelector } from "@/store/selectors/article";
+import { getArticleErrorSelector, getArticleLoaderSelector } from "@/store/selectors/article";
 import ArticleListing from "@/components/listing/article";
 import { Spinner } from "react-bootstrap";
 import axios from "axios";

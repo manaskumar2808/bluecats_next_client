@@ -14,15 +14,17 @@ import { useRouter } from 'next/router';
 import { RouteEnum } from '@/constants/route';
 import { NextSeo } from 'next-seo';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
+import headerConfig from '../api/header-config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
 interface ProfilePageProps {
     user: UserDoc;
     articles: ArticleType[];
+    drafts: ArticleType[];
 };
 
-const ProfilePage = ({ user, articles }: ProfilePageProps) => {
+const ProfilePage = ({ user, articles, drafts }: ProfilePageProps) => {
     const router = useRouter();
 
     const goToUpdate = () => {
@@ -44,7 +46,8 @@ const ProfilePage = ({ user, articles }: ProfilePageProps) => {
                 <Button onClick={goToUpdate} variant='dark'>Update</Button>
                 {/* {user?.phone && <Phone>{user?.phone}</Phone>} */}
             </Box>
-            <ArticleListing list={articles} legend='Your posts' />
+            {drafts?.length > 0 && <ArticleListing list={drafts} legend='Your drafts' />}
+            {articles?.length > 0 && <ArticleListing list={articles} legend='Your posts' />}
         </Container>
     );
 }
@@ -64,17 +67,23 @@ export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext
         }
     }
 
-    let response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`);
+    const token = session?.jwt?.token as string;
+
+    let response = await axios.get(`${config?.BASE_URL}/${config?.USER}/${session?.user?.id}`, headerConfig(token));
     const user = response?.data?.payload?.user;
 
-    response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}?user=${session?.user?.id}`);
+    response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}?user=${session?.user?.id}`, headerConfig(token));
     const articles = response?.data?.payload?.articles || [];
+
+    response = await axios.get(`${config?.BASE_URL}/${config?.DRAFT}`, headerConfig(token));
+    const drafts = response?.data?.payload?.drafts || [];
 
     return {
         props: {
             isAuth: true,
             user,
             articles,
+            drafts,
         }
     }
 }

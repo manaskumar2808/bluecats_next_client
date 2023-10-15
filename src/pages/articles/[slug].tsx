@@ -1,14 +1,14 @@
 import Article from '@/components/article';
 import { Container } from '@/styles/pages/articles/details';
 import { ArticleType } from '@/types/article';
-import axios from 'axios';
+import axios from '@/pages/api/axios-config';
 import { GetServerSidePropsContext } from 'next';
 import getConfig from 'next/config';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
-import { useRouter } from 'next/router';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
+import headerConfig from '../api/header-config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -17,8 +17,9 @@ interface ArticleDetailsPageProps {
 };
 
 const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
-    const router = useRouter();
-    const currentUrl = router.asPath;
+    let currentUrl = '';
+    if(typeof window !== 'undefined')
+        currentUrl = window?.location?.href;
 
     return (
         <Container>
@@ -55,7 +56,7 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 dateModified={article?.updatedAt as string}
                 description={article?.content}
             />
-            <Article article={article} />
+            <Article article={article} url={currentUrl} />
         </Container>
     );
 }
@@ -64,7 +65,7 @@ export async function getServerSideProps({ req, res, params }: GetServerSideProp
     const session = await getServerSession(req, res, authOptions);
     const title = params?.['slug'] as string;
     const encodedTitle = title && encodeURIComponent(title);
-    const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`);
+    const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`, headerConfig(session?.jwt?.token as string));
     const article = response?.data?.payload?.article;
 
     if(!article) {
