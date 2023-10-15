@@ -27,6 +27,7 @@ export const Display = styled.div`
     height: 160px;
     width: 100%;
     border-radius: 10px;
+    background-color: #ccc;
     overflow: hidden;
 `;
 

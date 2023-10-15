@@ -10,7 +10,7 @@ type ToolProps = {
 }
 
 const Tool = ({ editorState, toolType, onClick }: ToolProps) => {
-    const inlineStyle =editorState?.getCurrentInlineStyle?.();
+    const inlineStyle = editorState?.getCurrentInlineStyle?.();
 
     const clickHandler = () => {
         onClick?.(toolType);

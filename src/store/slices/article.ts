@@ -1,5 +1,6 @@
 import { BASE_URL, EndpointsEnum } from '@/constants/server';
 import { ArticleType } from '@/types/article';
+import headerConfig from '@/utility/request';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { HYDRATE } from 'next-redux-wrapper';
@@ -13,11 +14,17 @@ export interface ArticleState {
     error: string | undefined | null,
 };
 
+export interface ArticleRequestPayload {
+    formData: FormData;
+    token: string;
+}
+
 const initialState: ArticleState = {
     articles: [],
     loader: false,
     error: null,
 };
+
 
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async () => {
     const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}`);
@@ -25,8 +32,14 @@ export const fetchArticles = createAsyncThunk('articles/fetchArticles', async ()
     return data;
 });
 
-export const postArticle = createAsyncThunk('articles/postArticle', async (payload: FormData) => {
-    const response = await axios.post(`${config?.BASE_URL}/${config?.ARTICLE}`, payload);
+export const postArticle = createAsyncThunk('articles/postArticle', async (payload: ArticleRequestPayload) => {
+    const response = await axios.post(`${config?.BASE_URL}/${config?.ARTICLE}`, payload?.formData, headerConfig(payload?.token));
+    const data = response?.data;
+    return data;
+});
+
+export const postDraft = createAsyncThunk('articles/postDraft', async (payload: ArticleRequestPayload) => {
+    const response = await axios.post(`${config?.BASE_URL}/${config?.DRAFT}`, payload?.formData, headerConfig(payload?.token));
     const data = response?.data;
     return data;
 });
@@ -68,6 +81,17 @@ export const articleSlice = createSlice({
             state.error = null;
         })
         builder.addCase(postArticle.rejected, (state, action) => {
+            state.loader = false;
+            state.error = action?.error?.message;
+        })
+        builder.addCase(postDraft.pending, (state) => {
+            state.loader = true;
+        })
+        builder.addCase(postDraft.fulfilled, (state) => {
+            state.loader = false;
+            state.error = null;
+        })
+        builder.addCase(postDraft.rejected, (state, action) => {
             state.loader = false;
             state.error = action?.error?.message;
         })

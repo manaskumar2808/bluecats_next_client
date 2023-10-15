@@ -1,7 +1,7 @@
 import { MouseEventHandler, useState } from "react";
 import BasicInput from "./basic";
 import QuillInput from "./quill";
-import { Container, ButtonContainer, Error, ButtonWrapper } from '@/styles/components/editor/pages';
+import { Container, ButtonContainer, Error, ButtonWrapper, SaveContainer } from '@/styles/components/editor/pages';
 import { Button, Spinner } from "react-bootstrap";
 
 interface EditorPagesProps {
@@ -13,13 +13,17 @@ interface EditorPagesProps {
     setFile: Function;
     content: string;
     setContent: Function;
+    saving?: boolean;
+    deleting?: boolean;
     loader: boolean | undefined;
     error: string | undefined | null;
     valid: boolean | undefined;
-    onSubmit: MouseEventHandler<HTMLButtonElement> | undefined;
+    onSubmit?: MouseEventHandler<HTMLButtonElement>;
+    onSave?: MouseEventHandler<HTMLButtonElement>;
+    onDelete?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content, setContent, error, loader, valid, onSubmit }: EditorPagesProps) => {
+const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content, setContent, error, loader, saving, deleting, valid, onSubmit, onSave, onDelete }: EditorPagesProps) => {
     const [page, setPage] = useState(0);
 
     const pages = [
@@ -47,6 +51,10 @@ const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content,
 
     return (
         <Container>
+            <SaveContainer>
+                <Button size='sm' variant='primary' disabled={saving} onClick={onSave}>{saving ? 'Saving...' : 'Save'}</Button>
+                <Button size='sm' variant='danger' disabled={deleting} onClick={onDelete}>{deleting ? 'Deleting...' : 'Delete'}</Button>
+            </SaveContainer>
             {pages[page]}
             <div style={{ flex: 1 }} />
             {error && error?.length > 0 && <Error>{error}</Error>}

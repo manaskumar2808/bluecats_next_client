@@ -1,11 +1,15 @@
-import { PostArticle } from "@/types/article";
+import { DraftArticle, PostArticle } from "@/types/article";
 
-export const validPostArticle = ({ title, content, file, image, author }: PostArticle) => {
-    if(!title || title?.trim().length === 0)
-        return false;
-    if(!content || content?.trim().length === 0)
-        return false;
-    if(!author || author?.trim().length === 0)
-        return false;
-    return true;
+const emptyField = (val: string | undefined) => {
+    return !val || val?.trim?.()?.length === 0;
+}
+
+export const validPostArticle = ({ title, content }: PostArticle) => {
+    return !(emptyField(title) || emptyField(content));
+}
+
+export const validDraftArticle = ({ id, title, content }: DraftArticle) => {
+    if(!emptyField(id))
+        return true;
+    return !emptyField(title) || !emptyField(content);
 }

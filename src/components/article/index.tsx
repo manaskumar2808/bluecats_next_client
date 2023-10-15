@@ -4,6 +4,7 @@ import { getAspectRatio } from "@/utility/image";
 import { ImageLoaderProps } from "next/image";
 import { useEffect, useState } from "react";
 import { FacebookShareButton, WhatsappShareButton, WhatsappIcon, PinterestShareButton, EmailShareButton, LinkedinShareButton, LinkedinIcon, PinterestIcon, FacebookIcon, InstapaperShareButton, InstagramIcon, EmailIcon } from 'next-share';
+import Photo from "../photo";
 
 type ArticleProps = {
     article: ArticleType;
@@ -30,7 +31,8 @@ const Article = ({ article, url }: ArticleProps) => {
     return (
         <Container>
             {image && aspectRatio > 0.0 && <Display aspectRatio={aspectRatio}>
-                <Image loader={(img: ImageLoaderProps) => img.src} src={image} alt={title} layout='fill' objectFit="cover" />
+                {/* <Image loader={(img: ImageLoaderProps) => img.src} src={image} alt={title} layout='fill' objectFit="cover" /> */}
+                <Photo src={image} alt={title} fill />
             </Display>}
            <Title>{title}</Title>
            <Author>{author?.userName}</Author>
