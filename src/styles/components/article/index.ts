@@ -15,13 +15,20 @@ export const Container = styled.div`
     }
 `;
 
+export const Header = styled.div``;
+
+export const HeaderItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+`;
+
 export const Title = styled.h2`
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
     line-height: 22px;
     color: #000000;
-    text-align: center;
-    margin: 10px 16px;
+    margin: 5px 5px;
 `;
 
 export const Text = styled.p`
@@ -34,11 +41,12 @@ export const Text = styled.p`
 
 export const Author = styled.h5`
     cursor: pointer;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 18px;
     color: #1894FF;
     text-align: center;
+    margin: 0;
 
     &:hover {
         color: #0248ab;
@@ -53,7 +61,7 @@ export const Display = styled.div<DisplayProps>`
     position: relative;
     width: 100%;
     padding-bottom: ${({ aspectRatio = 0.5625 }) => `${aspectRatio * 100}%`};
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     margin: auto;
     overflow: hidden;
@@ -101,4 +109,12 @@ export const Row = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 16px;
+`;
+
+export const Timestamp = styled.p`
+    font-size: 12px;
+    font-weight: 400;
+    color: #858585;
+    z-index: 50;
+    margin: 0;
 `;

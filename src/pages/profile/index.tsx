@@ -15,6 +15,7 @@ import { RouteEnum } from '@/constants/route';
 import { NextSeo } from 'next-seo';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 import headerConfig from '../api/header-config';
+import Profile from '@/components/profile';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -38,9 +39,7 @@ const ProfilePage = ({ user, self, articles, drafts }: ProfilePageProps) => {
                 {...NEXT_SEO_DEFAULT}
             />
             <Box>
-                <Display>
-                    <Photo loader={(img: ImageLoaderProps) => img?.src} src={getProfileImage(user?.rand)} alt={user?.userName} fill />
-                </Display>
+                <Profile user={user} radius={75} />
                 {user?.userName && <Username>{user?.userName}</Username>}
                 {user?.name && <Name>{user?.name}</Name>}
                 {user?.email && <Email>{user?.email}</Email>}
