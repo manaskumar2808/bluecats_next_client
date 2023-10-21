@@ -1,7 +1,7 @@
 import { Container, Error, FallbackContainer } from "@/styles/pages";
 import { ArticleType } from "@/types/article";
 import { GetServerSidePropsContext } from "next";
-import { store, wrapper } from '@/store';
+import { store } from '@/store';
 import { updateArticles } from "@/store/slices/article";
 import { useSelector } from "react-redux";
 import { getArticleErrorSelector, getArticleLoaderSelector } from "@/store/selectors/article";
