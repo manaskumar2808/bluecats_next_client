@@ -13,6 +13,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { NextSeo } from "next-seo";
 import { NEXT_SEO_DEFAULT } from "../../next-seo-config";
+import { ArticleListingType } from "@/constants/article";
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -45,7 +46,7 @@ const HomePage = ({ articles: articleList }: HomePageProps) => {
             <NextSeo 
                 {...NEXT_SEO_DEFAULT}
             />
-            <ArticleListing list={articleList} />
+            <ArticleListing list={articleList} type={ArticleListingType.COLUMN} />
         </Container>
     );
 }

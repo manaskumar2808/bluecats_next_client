@@ -18,8 +18,8 @@ export const Legend = styled.p`
 
 export const Grid = styled.div`
     display: grid;
-    column-count: 3;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-count: 2;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
 
     @media (max-width: 500px) {
@@ -29,4 +29,12 @@ export const Grid = styled.div`
         justify-content: center;
         width: 100%;
     }
+`;
+
+export const Col = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+    gap: 10px;
 `;

@@ -1,10 +1,11 @@
 import { ArticleMode } from '@/constants/article';
 import { RouteEnum } from '@/constants/route';
-import { Container, Column, Author, Display, Photo, Title } from '@/styles/components/article/card';
+import { Container, Column, Row, Header, Author, Display, Photo, Title, Content, Timestamp, HeaderItem, ReadMore } from '@/styles/components/article/card';
 import { ArticleType } from '@/types/article';
 import { ImageLoaderProps } from 'next/image';
 import { useRouter } from 'next/navigation';
-import { MouseEventHandler } from 'react';
+import Profile from '../profile';
+import { getDisplayTimestamp } from '@/utility/timestamp';
 
 interface ArticleCardProps {
     article: ArticleType;
@@ -12,7 +13,7 @@ interface ArticleCardProps {
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
     const router = useRouter();
-    const { id, title, author, image, mode } = article;
+    const { id, title, content, author, image, mode, createdAt } = article;
 
     const onArticleClick = () => {
         if(mode === ArticleMode.DRAFT)
@@ -29,11 +30,23 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
     return (
         <Container onClick={onArticleClick}>
             <Column>
+                <Header>
+                    <Row>
+                        <Profile user={author} radius={17} border />
+                        <HeaderItem>
+                            <Author id='author' onClick={goToAuthorProfile}>{author?.userName}</Author>
+                            <Timestamp>{getDisplayTimestamp(createdAt as string)}</Timestamp>
+                        </HeaderItem>
+                    </Row>
+                </Header>
                 <Display>
                     {image && <Photo loader={(img: ImageLoaderProps) => img.src} src={image} alt={title} layout='fill' />}
                 </Display>
                 <Title>{title}</Title>
-                <Author id='author' onClick={goToAuthorProfile}>{author?.userName}</Author>
+                <Content>
+                    <div className="content" dangerouslySetInnerHTML={{__html: content}} />
+                </Content>
+                <ReadMore onClick={onArticleClick}>Read more</ReadMore>
             </Column>
         </Container>
     );

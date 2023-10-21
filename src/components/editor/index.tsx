@@ -1,12 +1,13 @@
 import { getArticleErrorSelector, getArticleLoaderSelector } from '@/store/selectors/article';
-import { Container, Display, Image, Info, LoaderContainer, Row } from '@/styles/components/editor';
+import { Container, Display, Image, Info, LoaderContainer, Row, Col } from '@/styles/components/editor';
 import { useCallback, useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Form, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import EditorPages from './pages';
 import { validDraftArticle, validPostArticle } from '@/utility/article';
 import { UserDoc } from '../../../types/next-auth';
 import { ArticleType } from '@/types/article';
+import ThemeInput from './theme';
 
 type EditorProps = {
     user: UserDoc,
@@ -111,35 +112,33 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
 
     return (
         <Container>
-            <Row>
-                <Display>
-                    {(image || file) && <Image 
-                        src={image || URL.createObjectURL(file)}
-                        alt={title}
-                    />}
-                </Display>
-                <Info>
-                    <EditorPages 
-                        title={title}
-                        content={content}
-                        image={image}
-                        file={file}
-                        saving={saving}
-                        deleting={deleting}
-                        error={error}
-                        loader={loader}
-                        valid={valid}
-                        validDraft={validDraft}
-                        setTitle={setTitle}
-                        setContent={setContent}
-                        setImage={setImage}
-                        setFile={setFile}
-                        onSave={onSave}
-                        onSubmit={onSubmit}
-                        onDelete={onDelete}
-                    />
-                </Info>
-            </Row>
+            <Col>
+                <ThemeInput 
+                    image={image}
+                    file={file}
+                    setImage={setImage}
+                    setFile={setFile}
+                />
+                <EditorPages 
+                    title={title}
+                    content={content}
+                    image={image}
+                    file={file}
+                    saving={saving}
+                    deleting={deleting}
+                    error={error}
+                    loader={loader}
+                    valid={valid}
+                    validDraft={validDraft}
+                    setTitle={setTitle}
+                    setContent={setContent}
+                    setImage={setImage}
+                    setFile={setFile}
+                    onSave={onSave}
+                    onSubmit={onSubmit}
+                    onDelete={onDelete}
+                />
+            </Col>
         </Container>
     );
 }

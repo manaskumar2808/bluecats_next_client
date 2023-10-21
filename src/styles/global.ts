@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         min-width: 500px;
         height: 100vh;
+        overflow: auto !important;
 
         @media (max-width: 500px) {
             min-width: 100%;

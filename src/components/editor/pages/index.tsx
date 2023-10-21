@@ -1,7 +1,7 @@
 import { MouseEventHandler, useState } from "react";
 import BasicInput from "./basic";
 import QuillInput from "./quill";
-import { Container, ButtonContainer, Error, ButtonWrapper, SaveContainer } from '@/styles/components/editor/pages';
+import { Container, Error, SaveContainer } from '@/styles/components/editor/pages';
 import { Button, Spinner } from "react-bootstrap";
 
 interface EditorPagesProps {
@@ -56,16 +56,23 @@ const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content,
                 <Button style={{ width: 100 }} size='sm' variant='primary' disabled={saving || !validDraft} onClick={onSave}>{saving ? 'Saving...' : 'Save'}</Button>
                 <Button style={{ width: 100 }} size='sm' variant='danger' disabled={deleting || !validDraft} onClick={onDelete}>{deleting ? 'Deleting...' : 'Delete'}</Button>
             </SaveContainer>
-            {pages[page]}
+            <BasicInput 
+                key={'basic'} 
+                title={title} 
+                image={image} 
+                file={file} 
+                setTitle={setTitle} 
+                setImage={setImage} 
+                setFile={setFile}  
+            />
+            <QuillInput 
+                key={'quill'} 
+                content={content} 
+                setContent={setContent} 
+            />
             <div style={{ flex: 1 }} />
             {error && error?.length > 0 && <Error>{error}</Error>}
-            <ButtonContainer>
-                <ButtonWrapper>
-                    <Button style={{ width: '100%' }} variant='dark' disabled={page === 0} onClick={prevPage}>Previous</Button>
-                </ButtonWrapper>
-                {page !== length-1 && <ButtonWrapper><Button style={{ width: '100%' }} variant='dark' disabled={page === length-1} onClick={nextPage}>Next</Button></ButtonWrapper>}
-                {page === length-1 && <ButtonWrapper><Button style={{ width: '100%' }} onClick={onSubmit} disabled={!valid}>{loader ? <Spinner color="#fff" size='sm' /> : 'Post Article'}</Button></ButtonWrapper>}
-            </ButtonContainer>
+            <Button style={{ width: 200, margin: 'auto' }} onClick={onSubmit} disabled={!valid}>{loader ? <Spinner color="#fff" size='sm' /> : 'Post Article'}</Button>
         </Container>
     );
 }
