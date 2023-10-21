@@ -36,27 +36,6 @@ const BasicInput = ({ title, image, setTitle, setImage, file, setFile }: BasicIn
                     placeholder='Title for the article'
                 />
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Image URL</Form.Label>
-                <Form.Control 
-                    value={image}
-                    onChange={e => setImage(e?.target?.value)}
-                    placeholder='Image URL for theme'
-                />
-            </Form.Group>
-            <Form.Group style={{ display: 'none' }}>
-                <Form.Control 
-                    id="upload"
-                    ref={fileInput}
-                    onChange={e => onUpload((e?.target as HTMLInputElement).files)}
-                    placeholder='Image URL for theme'
-                    type="file"
-                />
-            </Form.Group>
-            <Upload>
-                <Text>or</Text>
-                <Button onClick={uploadClickHandler}>Upload</Button>
-            </Upload>
         </Container>
     );
 }
