@@ -1,30 +1,27 @@
 import styled from "styled-components";
-import { setSyntheticLeadingComments } from "typescript";
 
 export const Container = styled.div`
     position: relative;
-    height: 600px;
     width: 100%;
-    border: 0.5px solid #ccc;
+    max-width: 600px;
+    margin: auto;
     border-radius: 5px;
-    overflow: hidden;
+    overflow: scroll;
+`;
 
-    @media (max-width: 800px) {
-        height: 85%;
-    }
-
-    @media (max-width: 500px) {
-        border: none;
-        padding: 10px;
-        height: 85%;
-    }
+export const Col = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    width: 100%;
+    gap: 20px;
 `;
 
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 100%;
 
     @media (max-width: 800px) {
         flex-direction: column;
@@ -34,10 +31,11 @@ export const Row = styled.div`
 `;
 
 export const Display = styled.div`
-    flex: 1;
-    height: 100%;
+    height: 260px;
+    width: 100%;
     background-color: #ccc;
     overflow: hidden;
+    border-radius: 5px;
 
     @media (max-width: 800px) {
         max-height: 300px;
@@ -57,12 +55,9 @@ export const Image = styled.img`
 `;
 
 export const Info = styled.div`
-    flex: 1;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
     gap: 10px;
-    padding: 20px;
 
     @media (max-width: 800px) {
         width: 100%;
