@@ -30,7 +30,7 @@ export const authOptions: AuthOptions = {
                 }
                 return response?.data?.payload;
             }
-        })
+        }),
     ],
     callbacks: {
         async jwt({ token: jwt, user: response }) {

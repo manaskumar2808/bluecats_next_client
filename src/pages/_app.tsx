@@ -23,7 +23,6 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta charSet="utf-8" />
           <meta name="google-site-verification" content="L8NgfBqQ2zl324T2q2qMcdL6ueoAVoLLNJOQYxE4vOU" />
-          {/* <link rel="icon" href="/favicon.ico" /> */}
           <link rel='icon' href='/logo/cat-16.ico' />
           <link rel='icon' href='/logo/cat-24.ico' />
           <link rel='icon' href='/logo/cat-32.ico' />
@@ -32,12 +31,15 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
           <link rel='icon' href='/logo/cat-256.ico' />
           <link rel='icon' href='/logo/cat-512.ico' />
 
+          {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
+          <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" /> */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
         </Head>
         <GlobalStyles />
-        <NextNProgress />
+        <NextNProgress options={{ showSpinner: false }} />
         <Layout isAuth={pageProps?.isAuth}>
           <Component {...pageProps} />
         </Layout>

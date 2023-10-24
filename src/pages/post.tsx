@@ -24,7 +24,7 @@ interface PostPageProps {
 
 const PostPage = ({ user, article, token }: PostPageProps) => {
     const router = useRouter();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch: any = useDispatch<AppDispatch>();
     
     const onPost = async (formData: FormData) => {
         try {
