@@ -2,7 +2,12 @@ import { Author, Container, Display, Image, Content, Title, ShareContainer, Row,
 import { ArticleType } from "@/types/article";
 import { getAspectRatio } from "@/utility/image";
 import { useEffect, useState } from "react";
-import { FacebookShareButton, WhatsappShareButton, WhatsappIcon, PinterestShareButton, EmailShareButton, LinkedinShareButton, LinkedinIcon, PinterestIcon, FacebookIcon, InstapaperShareButton, InstagramIcon, EmailIcon } from 'next-share';
+import { FacebookShareButton, WhatsappShareButton, PinterestShareButton, EmailShareButton, LinkedinShareButton, InstapaperShareButton } from 'next-share';
+import FacebookIcon from '@/icons/facebook';
+import WhatsappIcon from "@/icons/whatsapp";
+import LinkedInIcon from "@/icons/linkedin";
+import PintrestIcon from "@/icons/pintrest";
+import InstagramIcon from "@/icons/instagram";
 import Photo from "../photo";
 import { useRouter } from "next/router";
 import { RouteEnum } from "@/constants/route";
@@ -21,7 +26,7 @@ const Article = ({ article, url }: ArticleProps) => {
 
     const [aspectRatio, setAspectRatio] = useState<number>(0.0);
 
-    const iconSize = 32;
+    const iconSize = 24;
 
     useEffect(() => {
         if(!image)
@@ -58,23 +63,20 @@ const Article = ({ article, url }: ArticleProps) => {
            <ShareContainer>
                 <Row>
                     <FacebookShareButton title={title} url={url}>
-                        <FacebookIcon size={iconSize} round />
+                        <FacebookIcon size={iconSize} />
                     </FacebookShareButton>
                     <WhatsappShareButton title={title} url={url} separator=":">
-                        <WhatsappIcon size={iconSize} round />
+                        <WhatsappIcon size={iconSize} />
                     </WhatsappShareButton>
                     <LinkedinShareButton title={title} url={url}>
-                        <LinkedinIcon size={iconSize} round />
+                        <LinkedInIcon size={iconSize} />
                     </LinkedinShareButton>
                     <PinterestShareButton title={title} url={url} media={image as string}>
-                        <PinterestIcon size={iconSize} round />
+                        <PintrestIcon size={iconSize} />
                     </PinterestShareButton>
                     <InstapaperShareButton title={title} url={url}>
-                        <InstagramIcon size={iconSize} round />
+                        <InstagramIcon size={iconSize} />
                     </InstapaperShareButton>
-                    <EmailShareButton title={title} url={url}>
-                        <EmailIcon size={iconSize} round />
-                    </EmailShareButton>
                 </Row>
            </ShareContainer>
         </Container>

@@ -1,6 +1,3 @@
-import { Container, NavBar } from "@/styles/components/navigation";
-import NavItem from "./nav-item";
-import { NavItemEnum } from "@/constants";
 import { AccessEnum } from "@/constants/access";
 import { NavBarType, navs } from "@/constants/navigation";
 import TopNavigation from "./top";

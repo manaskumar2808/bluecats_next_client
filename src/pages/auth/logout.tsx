@@ -31,10 +31,10 @@ const LogoutPage = () => {
                 <div style={{ flex: 1 }} />
                 <Row>
                     <ButtonWrapper>
-                        <Button style={{ width: '100%' }} onClick={onLogout} variant='danger'>{loader ? <Spinner style={{ color: '#fff', height: 15, width: 15 }} /> : 'Yes logout'}</Button>
+                        <Button size='sm' style={{ width: '100%' }} onClick={onLogout} variant='danger'>{loader ? <Spinner style={{ color: '#fff', height: 15, width: 15 }} /> : 'Yes logout'}</Button>
                     </ButtonWrapper>
                     <ButtonWrapper>
-                        <Button style={{ width: '100%' }} onClick={onCancel} variant='dark'>Go back</Button>
+                        <Button size='sm' style={{ width: '100%' }} onClick={onCancel} variant='dark'>Go back</Button>
                     </ButtonWrapper>
                 </Row>
             </Box>

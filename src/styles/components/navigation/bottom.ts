@@ -11,14 +11,13 @@ export const HideKeyframes = keyframes`
 `;
 
 export const Container = styled.div<{ visible: boolean }>`
-    background-color: #fff;
+    background-color: #262626;
     z-index: 100;
     padding: 0;
     box-sizing: border-box;
     justify-content: center;
     width: fit-content;
     border-radius: 20px;
-    border: 0.5px solid #ccc;
     margin: 10px auto;
     transform: ${({ visible }) => `translateY(${visible ? -10 : 10}px)`};
     visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};

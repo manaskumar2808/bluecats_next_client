@@ -20,8 +20,9 @@ const NavItem = ({ navItem, type = NavItemEnum.TAB, navBarType = NavBarType.TOP 
     const { title, path, Icon } = navItem;
     
     const active = router?.pathname === path;
-    const size = 27;
-    const color = active ? '#ffffff' : '#404040';
+    const size = 24;
+    // const color = active ? '#ffffff' : '#404040';
+    const color = '#f5f5f5';
 
     return (
         <Container>

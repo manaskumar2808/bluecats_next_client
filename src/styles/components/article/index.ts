@@ -26,7 +26,7 @@ export const Title = styled.h2`
     font-size: 19px;
     font-weight: 600;
     line-height: 22px;
-    color: #000000;
+    color: #262626;
     margin: 5px 5px;
 `;
 
@@ -106,7 +106,7 @@ export const Row = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 `;
 
 export const Timestamp = styled.p`
