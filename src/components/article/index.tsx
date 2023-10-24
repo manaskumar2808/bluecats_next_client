@@ -50,7 +50,7 @@ const Article = ({ article, url }: ArticleProps) => {
             </Header>
             <Title>{title}</Title>
             {image && aspectRatio > 0.0 && <Display aspectRatio={aspectRatio}>
-                <Photo src={image} alt={title} fill />
+                <Photo src={image} alt={title} fill unoptimized />
             </Display>}
            <Content>
                 <div className="content" dangerouslySetInnerHTML={{__html: content}} />

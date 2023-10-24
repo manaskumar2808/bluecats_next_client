@@ -10,7 +10,8 @@ const GlobalStyles = createGlobalStyle`
 
     * {
         /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, 'Arial Narrow', Arial, sans-serif, Geneva, Tahoma, sans-serif; */
-        font-family: Montserrat;
+        /* font-family: Montserrat; */
+        font-family: Cabin;
     }
 
     body {
