@@ -10,7 +10,7 @@ export const Container = styled.div`
 
     @media (max-width: 500px) {
         width: 100%;
-        gap: 0;
+        gap: 10px;
         padding: 10px 16px;
     }
 `;
@@ -20,14 +20,13 @@ export const Header = styled.div``;
 export const HeaderItem = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 4px;
 `;
 
 export const Title = styled.h2`
     font-size: 19px;
     font-weight: 600;
     line-height: 22px;
-    color: #000000;
+    color: #262626;
     margin: 5px 5px;
 `;
 
@@ -45,7 +44,6 @@ export const Author = styled.h5`
     font-weight: 500;
     line-height: 18px;
     color: #1894FF;
-    text-align: center;
     margin: 0;
 
     &:hover {
@@ -108,7 +106,7 @@ export const Row = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 `;
 
 export const Timestamp = styled.p`

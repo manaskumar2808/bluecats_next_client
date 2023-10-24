@@ -40,7 +40,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                     </Row>
                 </Header>
                 <Display>
-                    {image && <Photo loader={(img: ImageLoaderProps) => img.src} src={image} alt={title} layout='fill' />}
+                    {image && <Photo loader={(img: ImageLoaderProps) => img.src} unoptimized src={image} alt={title} layout='fill' />}
                 </Display>
                 <Title>{title}</Title>
                 <Content>

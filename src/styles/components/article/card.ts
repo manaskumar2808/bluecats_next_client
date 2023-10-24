@@ -53,8 +53,9 @@ export const Photo = styled(Image)`
 export const Title = styled.h3`
     font-size: 15px;
     font-weight: 500;
-    color: #101010;
+    color: #262626;
     max-lines: 3;
+    margin: 0;
 `;
 
 export const Content = styled.div`
@@ -66,6 +67,7 @@ export const Content = styled.div`
         height: 100px;
         position: relative;
         color: #808080;
+        margin: 0;
 
         @media (max-width: 500px) {
             /* padding: 16px; */

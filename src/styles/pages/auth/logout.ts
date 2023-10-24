@@ -6,7 +6,7 @@ export const Container = styled.div`
 `;
 
 export const Box = styled.div`
-    height: 150px;
+    height: 120px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,12 +15,6 @@ export const Box = styled.div`
     text-align: center;
     display: flex;
     flex-direction: column;
-    
-    @media (max-width: 500px) {
-        height: 200px;
-        width: 100%;
-        padding: 0 20px;
-    }
 `;
 
 export const Title = styled.h2`
@@ -40,7 +34,7 @@ export const Row = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 `;
 
