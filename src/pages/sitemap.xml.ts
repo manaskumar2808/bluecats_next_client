@@ -14,7 +14,7 @@ function generateSiteMap(articles: ArticleType[]) {
          .map(({ title }) => {
            return `
          <url>
-             <loc>${`${process?.env?.NEXTAUTH_URL}/${encodeURIComponent(title)}`}</loc>
+             <loc>${`${process?.env?.NEXTAUTH_URL}/articles/${encodeURIComponent(title)}`}</loc>
          </url>
        `;
          })
