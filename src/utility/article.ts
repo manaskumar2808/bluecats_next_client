@@ -1,6 +1,7 @@
-import { DraftArticle, PostArticle } from "@/types/article";
+import { ArticleType, DraftArticle, PostArticle } from "@/types/article";
 import Pako, { Data } from "pako";
 import { isBase64 } from ".";
+import { SegmentObj, SegmentType, TextPayload } from "@/constants/segment";
 
 const emptyField = (val: string | undefined) => {
     return !val || val?.trim?.()?.length === 0;
@@ -37,4 +38,13 @@ export const decompressContent = (base64?: string): string => {
     const compressedBuffer = Buffer.from(base64, 'base64');
     const decompressedContent = Pako.ungzip(compressedBuffer, { to: 'string' });
     return decompressedContent;
+}
+
+
+export const getContentFromArticle = (article: ArticleType) => {
+    let content = '';
+    const textSegments: SegmentObj[] = article?.segments?.filter(segment => segment?.type === SegmentType.TEXT);
+    for(const textSegment of textSegments) 
+        content += (textSegment?.payload as TextPayload)?.text + ' ';
+    return content;
 }

@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 import headerConfig from '../api/header-config';
+import { getContentFromArticle } from '@/utility/article';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -54,7 +55,7 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 authorName={article?.author?.name || ''}
                 datePublished={article?.createdAt as string}
                 dateModified={article?.updatedAt as string}
-                description={article?.content}
+                description={getContentFromArticle(article)}
             />
             <Article article={article} url={currentUrl} />
         </Container>
