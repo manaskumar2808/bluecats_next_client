@@ -5,7 +5,7 @@ export const Container = styled.div``;
 export const Column = styled.div`
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-x: visible;
 `;
 
 export const EditorContainer = styled.div`
@@ -14,6 +14,7 @@ export const EditorContainer = styled.div`
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
+    overflow-x: visible;
 `;
 
 export const ButtonContainer = styled.div`

@@ -105,6 +105,7 @@ export const getServerSideProps = async ({ req, res, params, query }: GetServerS
             },
         }
     } catch(err) {
+        console.log('post page error', err);
         return {
             redirect: {
                 permanent: true,

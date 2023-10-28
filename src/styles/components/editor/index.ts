@@ -6,14 +6,15 @@ export const Container = styled.div`
     max-width: 600px;
     margin: auto;
     border-radius: 5px;
-    overflow: scroll;
+    overflow-x: visible;
+    border-width: 1px;
 `;
 
 export const Col = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: scroll;
+    overflow-x: visible;
     width: 100%;
     gap: 20px;
 `;

@@ -1,4 +1,4 @@
-import { Author, Container, Display, Image, Content, Title, ShareContainer, Row, Header, HeaderItem, Timestamp } from "@/styles/components/article";
+import { Author, Container, Display, SegmentSection, Content, Title, ShareContainer, Row, Header, HeaderItem, Timestamp } from "@/styles/components/article";
 import { ArticleType } from "@/types/article";
 import { getAspectRatio } from "@/utility/image";
 import { useEffect, useState } from "react";
@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import { RouteEnum } from "@/constants/route";
 import Profile from "../profile";
 import { getDisplayTimestamp } from "@/utility/timestamp";
+import { decompressContent } from "@/utility/article";
+import ArticleSegment from "./segment";
 
 type ArticleProps = {
     article: ArticleType;
@@ -22,11 +24,17 @@ type ArticleProps = {
 const Article = ({ article, url }: ArticleProps) => {
     const router = useRouter();
 
-    const { title, content, image, author, createdAt } = article;
+    const { title, content: compressedContent, image, segments, author, createdAt } = article;
+
+    const content = decompressContent(compressedContent);
 
     const [aspectRatio, setAspectRatio] = useState<number>(0.0);
 
     const iconSize = 24;
+
+    useEffect(() => {
+        console.log('article', article);
+    }, [article]);
 
     useEffect(() => {
         if(!image)
@@ -54,12 +62,15 @@ const Article = ({ article, url }: ArticleProps) => {
                 </Row>
             </Header>
             <Title>{title}</Title>
-            {image && aspectRatio > 0.0 && <Display aspectRatio={aspectRatio}>
+            {image && aspectRatio > 0.0 && <Display aspectratio={aspectRatio}>
                 <Photo src={image} alt={title} fill unoptimized />
             </Display>}
-           <Content>
+           {content && <Content>
                 <div className="content" dangerouslySetInnerHTML={{__html: content}} />
-           </Content>
+           </Content>}
+           <SegmentSection>
+                {segments.map(segment => <ArticleSegment segment={segment} />)}
+           </SegmentSection>
            <ShareContainer>
                 <Row>
                     <FacebookShareButton title={title} url={url}>
