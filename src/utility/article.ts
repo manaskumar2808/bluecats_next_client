@@ -41,7 +41,11 @@ export const decompressContent = (base64?: string): string => {
 }
 
 
-export const getContentFromArticle = (article: ArticleType) => {
+export const getContentFromArticle = (article?: ArticleType) => {
+    if(!article)
+        return '';
+    if(article?.content)
+        return article?.content;
     let content = '';
     const textSegments: SegmentObj[] = article?.segments?.filter(segment => segment?.type === SegmentType.TEXT);
     for(const textSegment of textSegments) 

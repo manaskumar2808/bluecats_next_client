@@ -22,6 +22,8 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
     if(typeof window !== 'undefined')
         currentUrl = window?.location?.href;
 
+    console.log('article', article);
+
     return (
         <Container>
             <NextSeo 
@@ -57,7 +59,7 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 dateModified={article?.updatedAt as string}
                 description={getContentFromArticle(article)}
             />
-            <Article article={article} url={currentUrl} />
+            {article && <Article article={article} url={currentUrl} />}
         </Container>
     );
 }
@@ -69,7 +71,7 @@ export async function getServerSideProps({ req, res, params }: GetServerSideProp
         const encodedTitle = title && encodeURIComponent(title);
         const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`, headerConfig(session?.jwt?.token as string));
         const article = response?.data?.payload?.article;
-    
+        
         if(!article) 
             throw new Error('Article not found!');
     

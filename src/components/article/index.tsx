@@ -33,10 +33,6 @@ const Article = ({ article, url }: ArticleProps) => {
     const iconSize = 24;
 
     useEffect(() => {
-        console.log('article', article);
-    }, [article]);
-
-    useEffect(() => {
         if(!image)
             return;
         getAspectRatio(image).then(ar => {

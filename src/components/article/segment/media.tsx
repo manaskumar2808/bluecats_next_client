@@ -15,17 +15,17 @@ const ArticleMediaSegment = ({ segment }: ArticleMediaSegmentProps) => {
     useEffect(() => {
         if(!url)
             return;
-        getAspectRatio(url).then(ar => {
+        getAspectRatio(getModifiedImageURL(url, cdn)).then(ar => {
             setAspectRatio(ar);
         }).catch(err => {
             console.log('Error loading image', err?.message);
         });
-    }, [url]);
+    }, [url, cdn]);
 
     return (
         <Container>
-            {url && 
-                <Display>
+            {url && aspectRatio > 0.0 && 
+                <Display aspectratio={aspectRatio}>
                     <Image src={getModifiedImageURL(url, cdn)} alt={caption ?? ''} fill unoptimized />
                 </Display>
             }

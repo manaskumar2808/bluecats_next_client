@@ -1,6 +1,7 @@
 import { SegmentObj } from '@/constants/segment';
 import { Container } from '@/styles/components/editor/segment/code';
 import { useEffect, useState } from 'react';
+import CodeEditor from '@monaco-editor/react';
 
 interface CodeSegmentProps {
     segment: SegmentObj;
@@ -9,7 +10,7 @@ interface CodeSegmentProps {
 
 const CodeSegment = ({ segment, onSegmentSave }: CodeSegmentProps) => {
     const [code, setCode] = useState<string>('');
-    const [language, setLanguage] = useState<string>('');
+    const [language, setLanguage] = useState<string>('javascript');
 
     useEffect(() => {
         onCodeSegmentSave();
@@ -25,7 +26,15 @@ const CodeSegment = ({ segment, onSegmentSave }: CodeSegmentProps) => {
     }
 
     return (
-        <Container></Container>
+        <Container>
+            <CodeEditor
+                height="100px"
+                language={language}
+                theme="vs-dark"
+                value={code}
+                onChange={(value, event) => setCode(value?.toString() as string)}
+            />
+        </Container>
     );
 }
 

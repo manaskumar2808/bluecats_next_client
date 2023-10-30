@@ -1,6 +1,6 @@
 import Editor from "@/components/editor";
 import { AppDispatch } from "@/store";
-import { postArticle, postDraft } from "@/store/slices/article";
+import { postArticle } from "@/store/slices/article";
 import { Container } from "@/styles/pages/post";
 import { GetServerSidePropsContext } from "next";
 import { useDispatch } from "react-redux";
