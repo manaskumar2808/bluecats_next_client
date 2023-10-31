@@ -5,7 +5,17 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    padding: 20px;
+
+    @media (max-width: 500px) {
+        padding: 0 20px;
+    }
+`;
+
+export const SegmentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
 `;
 
 export const SaveContainer = styled.div`

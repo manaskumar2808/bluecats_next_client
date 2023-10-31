@@ -1,8 +1,14 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler } from "react";
 import BasicInput from "./basic";
-import QuillInput from "./quill";
-import { Container, Error, SaveContainer } from '@/styles/components/editor/pages';
+import { Container, Error, SaveContainer, SegmentContainer } from '@/styles/components/editor/pages';
 import { Button, Spinner } from "react-bootstrap";
+import SegmentSelector from "../segment-selector";
+import { SegmentObj, SegmentType } from "@/constants/segment";
+import axios from "axios";
+import { publicRuntimeConfig as config } from '../../../../next.config';
+import headerConfig from "@/utility/request";
+import { useSession } from "next-auth/react";
+import Segment from "../segment";
 
 interface EditorPagesProps {
     title: string;
@@ -11,8 +17,8 @@ interface EditorPagesProps {
     setImage: Function;
     file: any;
     setFile: Function;
-    content: string;
-    setContent: Function;
+    segments: SegmentObj[];
+    setSegments: Function;
     saving?: boolean;
     deleting?: boolean;
     loader: boolean | undefined;
@@ -24,30 +30,47 @@ interface EditorPagesProps {
     onDelete?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content, setContent, error, loader, saving, deleting, valid, validDraft, onSubmit, onSave, onDelete }: EditorPagesProps) => {
-    const [page, setPage] = useState(0);
+const EditorPages = ({ title, setTitle, image, setImage, file, setFile, segments, setSegments, error, loader, saving, deleting, valid, validDraft, onSubmit, onSave, onDelete }: EditorPagesProps) => {
 
-    const pages = [
-        <BasicInput key={'basic'} title={title} image={image} setTitle={setTitle} setImage={setImage} file={file} setFile={setFile}  />,
-        <QuillInput key={'quill'} content={content} setContent={setContent} />
-    ];
+    const { data: session } = useSession();
 
-    const length = pages?.length;
-
-    const nextPage = () => {
-        setPage(prev => {
-            if(prev === length-1)
-                return prev;
-            return prev+1;
-        });
+    const onAddSegment = async (type: SegmentType) => {
+        try {
+            const formData = new FormData();
+            formData.append('type', type);
+            const response = await axios.post(`${config?.BASE_URL}/${config?.SEGMENT}`, formData, headerConfig(session?.jwt?.token as string));
+            if(response?.data?.error) 
+                throw new (Error as any)(response?.data?.error ?? 'Adding segment failed!');
+            const segment: SegmentObj = response?.data?.payload?.segment;
+            setSegments((prevSegments: SegmentObj[]) => [...prevSegments, segment]);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    
+    const onSegmentSave = async (payload: FormData) => {
+        try {
+            const response = await axios.post(`${config?.BASE_URL}/${config?.SEGMENT}`, payload, headerConfig(session?.jwt?.token as string));
+            if(response?.data?.error) 
+                throw new (Error as any)(response?.data?.error ?? 'Saving segment failed!');
+        } catch(err) {
+            console.log(err);
+        }
     }
 
-    const prevPage = () => {
-        setPage(prev => {
-            if(prev === 0)
-                return prev;
-            return prev-1;
-        });
+    const onSegmentDelete = async (segmentId: string) => {
+        try {
+            const response = await axios.delete(`${config?.BASE_URL}/${config?.SEGMENT}/${segmentId}`, headerConfig(session?.jwt?.token as string));
+            if(response?.data?.error) 
+                throw new (Error as any)(response?.data?.error ?? 'Deleting segment failed!');
+            setSegments((prevSegments: SegmentObj[]) => {
+                const segmentList = [...prevSegments];
+                const updatedSegmentList = segmentList?.filter(segment => segment?.id !== segmentId);
+                return updatedSegmentList;
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -65,11 +88,10 @@ const EditorPages = ({ title, setTitle, image, setImage, file, setFile, content,
                 setImage={setImage} 
                 setFile={setFile}  
             />
-            <QuillInput 
-                key={'quill'} 
-                content={content} 
-                setContent={setContent} 
-            />
+            <SegmentContainer>
+                {segments.map(segment => <Segment key={segment?.id} segment={segment} onSegmentSave={onSegmentSave} onSegmentDelete={onSegmentDelete} />)}
+            </SegmentContainer>
+            <SegmentSelector onAddSegment={onAddSegment} />
             <div style={{ flex: 1 }} />
             {error && error?.length > 0 && <Error>{error}</Error>}
             <Button style={{ width: 200, margin: 'auto' }} onClick={onSubmit} disabled={!valid}>{loader ? <Spinner color="#fff" size='sm' /> : 'Post Article'}</Button>

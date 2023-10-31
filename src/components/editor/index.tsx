@@ -4,10 +4,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { Form, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import EditorPages from './pages';
-import { validDraftArticle, validPostArticle } from '@/utility/article';
+import { compressContent, decompressContent, validDraftArticle, validPostArticle } from '@/utility/article';
 import { UserDoc } from '../../../types/next-auth';
 import { ArticleType } from '@/types/article';
 import ThemeInput from './theme';
+import pako from 'pako';
+import { SegmentObj } from '@/constants/segment';
 
 type EditorProps = {
     user: UserDoc,
@@ -27,12 +29,13 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
     
     const [id, setId] = useState<string | undefined>(article?.id);
     const [title, setTitle] = useState<string>(article?.title || '');
-    const [content, setContent] = useState<any>(article?.content || '');
     const [image, setImage] = useState<string>(article?.image || '');
+    const [segments, setSegments] = useState<SegmentObj[]>(article?.segments || []);
     const [file, setFile] = useState<any>(null);
+    const segmentIds: string[] = segments.map(segment => segment.id); 
 
-    const valid = validPostArticle({ title, content, image, file });
-    const validDraft = validDraftArticle({ id, title, content, image, file });
+    const valid = validPostArticle({ title, segments, image, file });
+    const validDraft = validDraftArticle({ id, title, segments, image, file });
 
     useEffect(() => {
         setDomLoaded(true);
@@ -45,7 +48,7 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
 
     useEffect(() => {
         onSave();
-    }, [title, content, image, file]);
+    }, [title, segmentIds?.length, image, file]);
 
     useEffect(() => {
         if(error) {
@@ -67,14 +70,14 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
 
     const onSave = useCallback(async () => {
         try {
-            if(!validDraftArticle({ id, title, content, file, image }))
+            if(!validDraftArticle({ id, title, segments, file, image }))
                 return;
             setSaving(true);
             const formData = new FormData();
             if(id)
                 formData.append('id', id);
             formData.append('title', title);
-            formData.append('content', content);
+            formData.append('segments', JSON.stringify(segmentIds));
             formData.append('image', image);
             formData.append('file', file);
             formData.append('author', user?.id);
@@ -86,14 +89,14 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
             console.log('saving err', err);
             setSaving(false);
         }
-    }, [id, title, content, image, file]);
+    }, [id, title, segmentIds?.length, image, file]);
 
     const onSubmit = () => {
         const formData = new FormData();
         if(id)
             formData.append('id', id);
         formData.append('title', title);
-        formData.append('content', content);
+        formData.append('segments', JSON.stringify(segmentIds));
         formData.append('image', image);
         formData.append('file', file);
         formData.append('author', user?.id);
@@ -121,7 +124,7 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
                 />
                 <EditorPages 
                     title={title}
-                    content={content}
+                    segments={segments}
                     image={image}
                     file={file}
                     saving={saving}
@@ -131,7 +134,7 @@ const Editor = ({ article, user, onButtonClick, onDraftSave, onDraftDelete }: Ed
                     valid={valid}
                     validDraft={validDraft}
                     setTitle={setTitle}
-                    setContent={setContent}
+                    setSegments={setSegments}
                     setImage={setImage}
                     setFile={setFile}
                     onSave={onSave}

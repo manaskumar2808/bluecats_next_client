@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 import headerConfig from '../api/header-config';
+import { getContentFromArticle } from '@/utility/article';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -20,6 +21,8 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
     let currentUrl = '';
     if(typeof window !== 'undefined')
         currentUrl = window?.location?.href;
+
+    console.log('article', article);
 
     return (
         <Container>
@@ -54,9 +57,9 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 authorName={article?.author?.name || ''}
                 datePublished={article?.createdAt as string}
                 dateModified={article?.updatedAt as string}
-                description={article?.content}
+                description={getContentFromArticle(article)}
             />
-            <Article article={article} url={currentUrl} />
+            {article && <Article article={article} url={currentUrl} />}
         </Container>
     );
 }
@@ -68,7 +71,7 @@ export async function getServerSideProps({ req, res, params }: GetServerSideProp
         const encodedTitle = title && encodeURIComponent(title);
         const response = await axios.get(`${config?.BASE_URL}/${config?.ARTICLE}/${encodedTitle}`, headerConfig(session?.jwt?.token as string));
         const article = response?.data?.payload?.article;
-    
+        
         if(!article) 
             throw new Error('Article not found!');
     

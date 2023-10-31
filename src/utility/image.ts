@@ -1,3 +1,5 @@
+import { publicRuntimeConfig as config } from '../../next.config';
+
 export const getAspectRatio = (url: string): Promise<number> => {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -16,3 +18,16 @@ export const getAspectRatio = (url: string): Promise<number> => {
         });
     });
 };
+
+const isUrlPrefixed = (url: string, prefix: string) => {
+    return url.startsWith(prefix);
+}
+
+export const getModifiedImageURL = (url: string | undefined, cdn: boolean | undefined) => {
+    if(!url)
+        return '';
+    if(!cdn)
+        return url;
+    let updatedUrl = `${config?.DOMAIN_URL}/${url}`;
+    return updatedUrl;
+}

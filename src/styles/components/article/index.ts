@@ -52,13 +52,13 @@ export const Author = styled.h5`
 `;
 
 interface DisplayProps {
-    aspectRatio: number;
+    aspectratio: number;
 };
 
 export const Display = styled.div<DisplayProps>`
     position: relative;
     width: 100%;
-    padding-bottom: ${({ aspectRatio = 0.5625 }) => `${aspectRatio * 100}%`};
+    padding-bottom: ${({ aspectratio = 0.5625 }) => `${aspectratio * 100}%`};
     border-radius: 5px;
     border: none;
     margin: auto;
@@ -66,10 +66,6 @@ export const Display = styled.div<DisplayProps>`
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    @media (max-width: 500px) {
-        /* padding: 10px; */
-    }
 `;
 
 export const Content = styled.div`
@@ -77,10 +73,6 @@ export const Content = styled.div`
         width: 100%;
         overflow: hidden;
         justify-content: center;
-
-        @media (max-width: 500px) {
-            /* padding: 16px; */
-        }
     }
 
     .content img {
@@ -91,9 +83,15 @@ export const Content = styled.div`
     }
 `;
 
+export const SegmentSection = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
 export const Image = styled(NextImage)`
     object-fit: contain;
-    /* border-radius: 10px; */
     overflow: hidden;
 `;
 
