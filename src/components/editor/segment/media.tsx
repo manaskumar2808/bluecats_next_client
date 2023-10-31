@@ -12,10 +12,10 @@ interface MediaSegmentProps {
 }
 
 const MediaSegment = ({ segment, onSegmentSave }: MediaSegmentProps) => {
-    const { url: defaultUrl, caption: defaultCaption, cdn: defaultCdn } = segment?.payload as MediaPayload;
+    const payload = segment?.payload as MediaPayload;
 
-    const [url, setUrl] = useState<string>(defaultUrl || '');
-    const [caption, setCaption] = useState<string>(defaultCaption || '');
+    const [url, setUrl] = useState<string>(payload?.url || '');
+    const [caption, setCaption] = useState<string>(payload?.caption || '');
     const [file, setFile] = useState<any>();
 
     const onMediaSegmentSave = async () => {
@@ -33,7 +33,7 @@ const MediaSegment = ({ segment, onSegmentSave }: MediaSegmentProps) => {
     return (
         <Container>
             <Uploader 
-                url={getModifiedImageURL(url, defaultCdn)}
+                url={getModifiedImageURL(url, payload?.cdn)}
                 setUrl={setUrl}
                 file={file}
                 setFile={setFile}

@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler } from "react";
 import BasicInput from "./basic";
 import { Container, Error, SaveContainer, SegmentContainer } from '@/styles/components/editor/pages';
 import { Button, Spinner } from "react-bootstrap";
