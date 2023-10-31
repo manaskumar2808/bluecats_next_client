@@ -17,6 +17,7 @@ const Profile = ({ user, radius = 30, border = false }: ProfileProps) => {
                 src={getProfileImage(user?.rand)} 
                 alt={user?.userName} 
                 fill 
+                unoptimized
             />
         </Container>
     );
