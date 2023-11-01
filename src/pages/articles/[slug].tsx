@@ -10,6 +10,7 @@ import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { NEXT_SEO_DEFAULT } from '../../../next-seo-config';
 import headerConfig from '../api/header-config';
 import { getContentFromArticle } from '@/utility/article';
+import { AppConstants } from '@/constants';
 
 const { publicRuntimeConfig: config } = getConfig();
 
@@ -54,6 +55,8 @@ const ArticleDetailsPage = ({ article }: ArticleDetailsPageProps) => {
                 images={[
                     article?.image || '',
                 ]}
+                publisherLogo='/logo/cat-32.ico'
+                publisherName={AppConstants.NAME}
                 authorName={article?.author?.name || ''}
                 datePublished={article?.createdAt as string}
                 dateModified={article?.updatedAt as string}
